@@ -1,16 +1,16 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import urllib.request  # To fetch files from GitHub
-
-# ✅ Load the model from GitHub
-MODEL_URL = "https://github.com/Ramiogue/safe-/blob/main/rf_model.pkl" 
-urllib.request.urlretrieve(MODEL_URL, "rf_model.pkl")
-
-# ✅ Load the model from the local file
-model = joblib.load("rf_model.pkl")
+import os
 
 st.title("Loan Default Prediction")
+
+# ✅ Ensure the file exists before loading
+if os.path.exists("rf_model.pkl"):
+    model = joblib.load("rf_model.pkl")
+else:
+    st.error("Model file not found! Please check if 'rf_model.pkl' is in the correct directory.")
+
 st.write("Enter details to predict if a loan will be fully paid or charged off.")
 
 # User Inputs
@@ -33,6 +33,9 @@ input_data = pd.DataFrame([[loan_amount, int_rate, installment, grade, home_owne
 
 # Predict
 if st.button("Predict"):
-    prediction = model.predict(input_data)
-    result = "Fully Paid" if prediction[0] == 0 else "Charged Off"
-    st.subheader(f"Prediction: {result}")
+    if "model" in globals():
+        prediction = model.predict(input_data)
+        result = "Fully Paid" if prediction[0] == 0 else "Charged Off"
+        st.subheader(f"Prediction: {result}")
+    else:
+        st.error("Model is not loaded. Check if 'rf_model.pkl' is correctly placed.")
