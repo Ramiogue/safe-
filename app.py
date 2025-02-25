@@ -4,7 +4,7 @@ import joblib
 import urllib.request  # To fetch files from GitHub
 
 # ✅ Load the model from GitHub
-MODEL_URL = "https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/rf_model.pkl"  # Update this!
+MODEL_URL = "https://github.com/Ramiogue/safe-/blob/main/rf_model.pkl" 
 urllib.request.urlretrieve(MODEL_URL, "rf_model.pkl")
 
 # ✅ Load the model from the local file
