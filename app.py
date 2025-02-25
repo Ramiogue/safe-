@@ -4,7 +4,7 @@ import joblib
 import urllib.request
 
 # Load the model from GitHub
-MODEL_URL = "https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/rf_model.pkl"
+MODEL_URL = "https://github.com/Ramiogue/safe-/blob/main/rf_model.pkl"
 urllib.request.urlretrieve(MODEL_URL, "rf_model.pkl")
 
 # Load the model
