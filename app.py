@@ -1,13 +1,13 @@
 import streamlit as st
 import pandas as pd
 import joblib
-import urllib.request
+import urllib.request  # To fetch files from GitHub
 
-# Load the model from GitHub
-MODEL_URL = "https://github.com/Ramiogue/safe-/blob/main/rf_model.pkl"
+# ✅ Load the model from GitHub
+MODEL_URL = "https://raw.githubusercontent.com/YOUR-USERNAME/YOUR-REPO/main/rf_model.pkl"  # Update this!
 urllib.request.urlretrieve(MODEL_URL, "rf_model.pkl")
 
-# Load the model
+# ✅ Load the model from the local file
 model = joblib.load("rf_model.pkl")
 
 st.title("Loan Default Prediction")
@@ -20,14 +20,14 @@ installment = st.number_input("Monthly Installment ($)", min_value=10, max_value
 grade = st.selectbox("Loan Grade", ["A", "B", "C", "D", "E", "F", "G"])
 home_ownership = st.selectbox("Home Ownership", ["RENT", "MORTGAGE", "OWN"])
 
-# Encoding inputs (matching model training)
+# Encoding inputs
 grade_mapping = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7}
 home_mapping = {'RENT': 0, 'MORTGAGE': 1, 'OWN': 2}
 
 grade = grade_mapping[grade]
 home_ownership = home_mapping[home_ownership]
 
-# Format inputs for the model
+# Format inputs
 input_data = pd.DataFrame([[loan_amount, int_rate, installment, grade, home_ownership]], 
                           columns=["loan_amount", "int_rate", "installment", "grade", "home_ownership"])
 
